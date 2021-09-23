@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="name"
+            type="String" />
+    </data>
+<androidx.cardview.widget.CardView
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_margin="15dp"
+    app:cardCornerRadius="25sp"
+    android:shadowColor="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/img_pokemon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+        <TextView
+            android:id="@+id/tx_number"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            tools:text="Nº 001"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/img_pokemon"
+            app:layout_constraintEnd_toEndOf="@id/img_pokemon"/>
+
+        <TextView
+            android:id="@+id/tx_name_poke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pokemon_hollow"
+            android:text="@{name}"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/img_pokemon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="charmander" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+</layout>
