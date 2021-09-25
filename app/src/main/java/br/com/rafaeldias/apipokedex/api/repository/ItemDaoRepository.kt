@@ -1,8 +1,8 @@
 package br.com.rafaeldias.apipokedex.api.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import br.com.rafaeldias.apipokedex.api.ApiUtils
-import br.com.rafaeldias.apipokedex.api.RetrofitClient
 import br.com.rafaeldias.apipokedex.api.PokemonService
 import br.com.rafaeldias.apipokedex.api.model.PokemonsApiResult
 import br.com.rafaeldias.apipokedex.domain.Pokemon
@@ -13,12 +13,15 @@ import retrofit2.Response
 class ItemDaoRepository {
     private val listPokemon: MutableLiveData<List<Pokemon>> = MutableLiveData()
     private val idao: PokemonService = ApiUtils.getItemsDaoInterface()
+    private val pokeDetails: MutableLiveData<Pokemon> = MutableLiveData()
+
 
     fun bringItems(): MutableLiveData<List<Pokemon>> {
         return listPokemon
     }
-
-
+    fun bringInfoPoke(): MutableLiveData<Pokemon> {
+        return pokeDetails
+    }
     fun callListApi(){
             idao.listPokemons(153)
             .enqueue(object : Callback<PokemonsApiResult> {
@@ -33,7 +36,20 @@ class ItemDaoRepository {
                     TODO("Not yet implemented")
                 }
             })
-
     }
 
+    fun pokemonDetails (id: Int){
+        idao.getPokemon(id)
+            .enqueue(object : Callback<Pokemon> {
+                override fun onResponse(
+                    call: Call<Pokemon>,
+                    response: Response<Pokemon>
+                ) {
+                    pokeDetails.postValue(response.body())
+                }
+                override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+                    Log.d("TAG", "Erro")
+                }
+            })
+    }
 }

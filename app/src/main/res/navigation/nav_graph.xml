@@ -9,5 +9,24 @@
         android:id="@+id/homeFragment"
         android:name="br.com.rafaeldias.apipokedex.ui.home.HomeFragment"
         android:label="Pokemon"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_datailsFragment"
+            app:destination="@id/datailsFragment"
+            app:popUpToInclusive="true"
+            >
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/datailsFragment"
+        android:name="br.com.rafaeldias.apipokedex.ui.detail.DatailsFragment"
+        android:label="datails_fragment"
+        tools:layout="@layout/datails_fragment" >
+        <argument
+            android:name="number"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <action android:id="@+id/retorna_HomeFragment" app:destination="@id/homeFragment" />
 </navigation>

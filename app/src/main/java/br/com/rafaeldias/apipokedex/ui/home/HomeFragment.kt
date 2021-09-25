@@ -3,7 +3,6 @@ package br.com.rafaeldias.apipokedex.ui.home
 
 import android.os.Bundle
 import android.view.*
-
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,12 +30,12 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         setHasOptionsMenu(true)
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
 
         binding.searchScrean = this
         binding.rvListPokemon.layoutManager=GridLayoutManager(requireContext(),2)
@@ -46,12 +45,10 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
             if (it !=null){
                 binding.adapter = pokemonAdapter
                 pokemonAdapter.addItemInList(it)
-
             }else{
                 Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
             }
         })
-
         return binding.root
     }
 
@@ -64,12 +61,10 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
 
     }
     override fun onQueryTextSubmit(query: String): Boolean {
-       // viewModel.setSearchQuery(query)
         return true
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-      //  viewModel.setSearchQuery(newText)
         return true
     }
 
@@ -77,10 +72,4 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         super.onResume()
         viewModel.loadItems()
     }
-
-
-
-
-
-
 }
