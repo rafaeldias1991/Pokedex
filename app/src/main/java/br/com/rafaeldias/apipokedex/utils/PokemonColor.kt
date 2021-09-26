@@ -11,6 +11,7 @@ class PokemonColor(var context: Context) {
     @ColorInt
     fun getTypeColor(type: String): Int {
         val color = when (type) {
+            "normal" -> R.color.normal
             "fighting" -> R.color.fighting
             "charmander" -> R.color.fighting
             "flying" -> R.color.flying

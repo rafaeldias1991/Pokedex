@@ -2,6 +2,7 @@ package br.com.rafaeldias.apipokedex.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.rafaeldias.apipokedex.api.repository.ItemDaoRepository
 import br.com.rafaeldias.apipokedex.domain.Pokemon
 

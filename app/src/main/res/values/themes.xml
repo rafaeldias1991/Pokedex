@@ -16,7 +16,6 @@
     <style name="AppTheme.Toolbar.Title" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Set proper title size -->
         <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
-        <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="fontFamily">@font/pokemon_solid</item>

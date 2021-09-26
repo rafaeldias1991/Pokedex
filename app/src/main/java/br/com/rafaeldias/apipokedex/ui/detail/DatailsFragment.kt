@@ -14,6 +14,7 @@ import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
 import br.com.rafaeldias.apipokedex.domain.Pokemon
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import com.bumptech.glide.Glide
+import com.skydoves.progressview.progressView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -38,7 +39,7 @@ class DatailsFragment : Fragment() {
         return binding.root
     }
 
-    fun setDetailPokemon(it: Pokemon){
+    fun setDetailPokemon(it: Pokemon) {
 
         binding.apply {
             Glide.with(root)
@@ -48,7 +49,7 @@ class DatailsFragment : Fragment() {
             txNameDatail.text = it.name.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             }
-            index.text = it.formattedNumber
+            index.text = "Nº" + it.order
             tvType1.text = it.types[0].type.name
             if (it.types.size > 1) {
                 tvType2.visibility = View.VISIBLE
@@ -56,28 +57,40 @@ class DatailsFragment : Fragment() {
             } else {
                 tvType2.visibility = View.GONE
             }
-            txHp.text = it.stats[0].base_stat.toString()
-            txAttack.text = it.stats[1].base_stat.toString()
-            txDefense.text = it.stats[2].base_stat.toString()
-            txSpeed.text = it.stats[3].base_stat.toString()
+            progressBarHp.progress = it.stats[0].base_stat.toFloat()
+            progressBarHp.labelText = it.stats[0].base_stat.toString().uppercase()
+
+            progressBarAtac.progress = it.stats[1].base_stat.toFloat()
+            progressBarAtac.labelText = it.stats[1].base_stat.toString().uppercase()
+
+            progressBarDef.progress = it.stats[2].base_stat.toFloat()
+            progressBarDef.labelText = it.stats[2].base_stat.toString().uppercase()
+
+            progressBarSpeed.progress = it.stats[3].base_stat.toFloat()
+            progressBarSpeed.labelText = it.stats[3].base_stat.toString().uppercase()
+
         }
     }
-    fun observerPokeDetail(){
+
+    fun observerPokeDetail() {
         viewModel.pokemonDataDetail.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             val context = requireContext()
-            val color =  PokemonColor(context).getTypeColor(it.types[0].type.name)
-            val color2 =  PokemonColor(context).getTypeColor(it.types[1].type.name)
+            val color = PokemonColor(context).getTypeColor(it.types[0].type.name)
+            if (it.types.size > 1) {
+                val color2 = PokemonColor(context).getTypeColor(it.types[1].type.name)
+                binding.tvType2.background.colorFilter =
+                    PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP)
+            }
             binding.constraint.background.colorFilter =
-                PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)
+                PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
             activity?.window?.statusBarColor =
                 PokemonColor(context).getTypeColor(it.types[0].type.name)
             binding.tvType1.background.colorFilter =
-                PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)
-            binding.tvType2.background.colorFilter =
-                PorterDuffColorFilter(color2,PorterDuff.Mode.SRC_ATOP)
-            if (it != null){
+                PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+
+            if (it != null) {
                 setDetailPokemon(it)
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Erro ao carregar", Toast.LENGTH_SHORT).show()
             }
         })

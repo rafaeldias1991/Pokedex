@@ -33,7 +33,7 @@ class ItemDaoRepository {
                 }
 
                 override fun onFailure(call: Call<PokemonsApiResult>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.d("TAG", "Erro")
                 }
             })
     }

@@ -12,12 +12,12 @@
     <color name="black_70">#B3000000</color>
     <color name="skyBlue">#57A8D8</color>
     <color name="yellow">#FBC02D</color>
-    <color name="fire">#B22328</color>
+    <color name="fire">#FD7D24</color>
     <color name="flying">#90B1C5</color>
     <color name="ghost">#363069</color>
     <color name="ice">#7ECFF2</color>
     <color name="poison">#642785</color>
-    <color name="psychic">#AC296B</color>
+    <color name="psychic">#F366B9</color>
     <color name="rock">#4B190E</color>
     <color name="steel">#5C756D</color>
     <color name="water">#2648DC</color>
@@ -30,11 +30,16 @@
     <color name="md_green_200">#388E3C</color>
     <color name="fighting">#9F422A</color>
     <color name="charmander">#9F422A</color>
-    <color name="grass">#007C42</color>
+    <color name="grass">#9BCC50</color>
     <color name="ground">#AD7235</color>
     <color name="md_blue_100">#81D4fA</color>
     <color name="md_blue_200">#0091EA</color>
     <color name="dark">#040706</color>
     <color name="dragon">#378A94</color>
     <color name="bug">#179A55</color>
+    <color name="normal">#81D4fA</color>
+    <color name="hp">#D53A47</color>
+    <color name="defesa">#179A55</color>
+    <color name="ataque">#FBC02D</color>
+    <color name="speed">#7ECFF2</color>
 </resources>
