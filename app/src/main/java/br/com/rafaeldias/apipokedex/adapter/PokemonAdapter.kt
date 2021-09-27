@@ -1,18 +1,19 @@
 package br.com.rafaeldias.apipokedex.adapter
 
+import android.view.ContentInfo
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import br.com.rafaeldias.apipokedex.databinding.ItenPokemonBinding
 import br.com.rafaeldias.apipokedex.domain.Pokemon
 import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
+import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import com.bumptech.glide.Glide
 import java.util.*
 
 class PokemonAdapter(
-
-
 ): RecyclerView.Adapter<PokemonAdapter.ViewHolder>(){
     private lateinit var binding: ItenPokemonBinding
 
@@ -55,7 +56,9 @@ class PokemonAdapter(
     class ViewHolder(
         val binding: ItenPokemonBinding
         ): RecyclerView.ViewHolder(binding.root)
+
     fun addItemInList(items: List<Pokemon>) {
         listPokemon.addAll(items)
     }
+
 }

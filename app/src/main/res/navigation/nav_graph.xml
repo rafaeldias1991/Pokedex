@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_homeFragment_to_datailsFragment"
             app:destination="@id/datailsFragment"
-            app:popUpTo="@id/homeFragment"
+
             app:popUpToInclusive="false"
             >
         </action>

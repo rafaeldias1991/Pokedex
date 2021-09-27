@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
 import br.com.rafaeldias.apipokedex.domain.Pokemon
+import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import com.bumptech.glide.Glide
 import com.skydoves.progressview.progressView
@@ -22,7 +23,7 @@ import java.util.*
 class DatailsFragment : Fragment() {
 
     val args: DatailsFragmentArgs by navArgs()
-    private val viewModel: DatailsViewModel by viewModel()
+    private val viewModel: HomeViewModel by viewModel()
     private val binding: DatailsFragmentBinding by lazy {
         DatailsFragmentBinding.inflate(layoutInflater)
     }
@@ -40,11 +41,10 @@ class DatailsFragment : Fragment() {
     }
 
     fun setDetailPokemon(it: Pokemon) {
-
         binding.apply {
             Glide.with(root)
                 .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${it.id}.png")
-                .timeout(6000)
+                .timeout(2000)
                 .into(imgPokemonDetail)
             txNameDatail.text = it.name.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
@@ -83,6 +83,7 @@ class DatailsFragment : Fragment() {
             }
             binding.constraint.background.colorFilter =
                 PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+
             activity?.window?.statusBarColor =
                 PokemonColor(context).getTypeColor(it.types[0].type.name)
             binding.tvType1.background.colorFilter =
@@ -95,6 +96,7 @@ class DatailsFragment : Fragment() {
             }
         })
     }
+
 
 
 }
