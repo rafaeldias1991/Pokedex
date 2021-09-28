@@ -2,7 +2,6 @@ package br.com.rafaeldias.apipokedex.ui.home
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.rafaeldias.apipokedex.R
 import br.com.rafaeldias.apipokedex.adapter.PokemonAdapter
 import br.com.rafaeldias.apipokedex.databinding.HomeFragmentBinding
-import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,8 +34,8 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.window?.statusBarColor =
-            PokemonColor(requireContext()).getTypeColor("normal")
+
+
 
         binding.searchScrean = this
         binding.rvListPokemon.layoutManager=GridLayoutManager(requireContext(),2)
@@ -68,5 +66,10 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String): Boolean {
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadItems()
     }
 }

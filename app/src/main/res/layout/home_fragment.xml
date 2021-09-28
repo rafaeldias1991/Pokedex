@@ -37,12 +37,13 @@
                 app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
                  />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_pokemon"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adapter="@{adapter}"
+                tools:itemCount="4"
+                tools:listitem="@layout/iten_pokemon"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
