@@ -25,20 +25,25 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/myToolbar"
+                android:elevation="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/design_default_color_primary"
-                android:theme="@style/AppTheme.Toolbar.Title" />
-
+                app:title="Pokedex API"
+                android:background="@color/white"
+                app:titleTextColor="@color/yellow"
+                app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
+                 />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_pokemon"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adapter="@{adapter}"
+                tools:itemCount="4"
+                tools:listitem="@layout/iten_pokemon"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

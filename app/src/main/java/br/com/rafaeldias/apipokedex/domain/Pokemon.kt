@@ -1,14 +1,17 @@
 package br.com.rafaeldias.apipokedex.domain
 
+import br.com.rafaeldias.apipokedex.domain.response.Stat
+import br.com.rafaeldias.apipokedex.domain.response.Type
+
 data class Pokemon (
-    val number: Int,
+    val order: Int,
     val name: String,
     val url: String,
     val id: String = url,
-    val types: List<PokemonType>,
+    val stats: List<Stat>,
+    val types: List<Type>
     )
 {
-    val formattedNumber = number.toString().padStart(3, '0')
+    val formattedNumber = order.toString().padStart(3, '0')
 
-    val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$formattedNumber.png"
 }

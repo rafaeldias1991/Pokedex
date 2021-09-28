@@ -1,13 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detail.DatailsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="pokemon"
+            type="br.com.rafaeldias.apipokedex.domain.Pokemon" />
+
+        <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@color/design_default_color_primary"
+        tools:context=".ui.detail.DatailsFragment">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:translationZ="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="#001" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_name_datail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:translationZ="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/img_pokemon_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="skydoves" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/card_pokemon_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="250dp"
+            android:background="@color/white"
+            android:theme="@style/ShapeAppearanceOverlay.CardView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_pokemon_detail"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="286dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Status Base"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tx_base">
+
+            <TextView
+                android:id="@+id/tvType1"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:background="#A4ACAF"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Type" />
+
+            <TextView
+                android:id="@+id/tvType2"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#A4ACAF"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Fire" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="45dp"
+            android:text="HP"
+            android:textColor="@color/hp"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_base" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_attack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="35dp"
+            android:text="ATTACK"
+            android:textColor="@color/ataque"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_hp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_defense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="35dp"
+            android:text="DEFENSE"
+            android:textColor="@color/defesa"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_attack" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tx_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="35dp"
+            android:text="SPEED"
+            android:textColor="@color/speed"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_defense" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="10sp"
+            android:background="?attr/actionBarItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> navController.popBackStack()}"
+            android:src="@drawable/ic_baseline_west"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressBarHp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tx_hp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tx_hp"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="#A4ACAF"
+            app:progressView_colorProgress="@color/hp"
+            app:progressView_labelColorInner="@color/white"
+            app:progressView_labelColorOuter="@color/black"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="15"
+            app:progressView_padding="1dp"
+            app:progressView_progress="40"
+            app:progressView_progressFromPrevious="false"
+            app:progressView_radius="12dp" />
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressBarAtac"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tx_attack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tx_attack"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="#A4ACAF"
+            app:progressView_colorProgress="@color/ataque"
+            app:progressView_labelColorInner="@color/white"
+            app:progressView_labelColorOuter="@color/black"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="15"
+            app:progressView_padding="1dp"
+            app:progressView_progress="40"
+            app:progressView_progressFromPrevious="false"
+            app:progressView_radius="12dp" />
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressBarDef"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tx_defense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tx_defense"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="#A4ACAF"
+            app:progressView_colorProgress="@color/defesa"
+            app:progressView_labelColorInner="@color/white"
+            app:progressView_labelColorOuter="@color/black"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="15"
+            app:progressView_padding="1dp"
+            app:progressView_progress="40"
+            app:progressView_progressFromPrevious="false"
+            app:progressView_radius="12dp" />
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressBarSpeed"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tx_speed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tx_speed"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="#A4ACAF"
+            app:progressView_colorProgress="@color/speed"
+            app:progressView_labelColorInner="@color/white"
+            app:progressView_labelColorOuter="@color/black"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="15"
+            app:progressView_padding="1dp"
+            app:progressView_progress="40"
+            app:progressView_progressFromPrevious="false"
+            app:progressView_radius="12dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
