@@ -10,10 +10,7 @@ import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
 import com.bumptech.glide.Glide
 import java.util.*
 
-class PokemonAdapter(
-
-
-): RecyclerView.Adapter<PokemonAdapter.ViewHolder>(){
+class PokemonAdapter: RecyclerView.Adapter<PokemonAdapter.ViewHolder>(){
     private lateinit var binding: ItenPokemonBinding
 
     val listPokemon: MutableList<Pokemon> = mutableListOf()

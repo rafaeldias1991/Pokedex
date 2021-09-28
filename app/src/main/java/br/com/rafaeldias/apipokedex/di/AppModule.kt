@@ -11,23 +11,19 @@ import br.com.rafaeldias.apipokedex.usecase.ApplySearchFilter
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val pokedexModule = module {
+private val pokedexModule = module {
     single { ServiceClient.getServiceClient(apiClass = PokedexApi::class.java) }
-
     factory { PokedexRepository(api = get()) }
 }
 
-val viewModelModule = module {
-
+private val viewModelModule = module {
     viewModel { HomeViewModel(idaov = get(), pokedexRepository = get())}
     viewModel { DatailsViewModel(get())}
-
-
 }
+
 private val useCaseModule = module {
     factory { PokemonAdapter() }
     factory { ApplySearchFilter() }
-
 }
 
 private val useDao = module {
