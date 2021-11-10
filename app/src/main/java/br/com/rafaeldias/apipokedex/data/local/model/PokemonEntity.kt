@@ -18,7 +18,7 @@ data class PokemonEntity(
     val statsDefense: Int,
     val statsSpeed: Int,
     val types1: String,
-  //  val types2: String? = null
+    val types2: String
 
 ): Parcelable
 
@@ -28,7 +28,7 @@ fun ResultPokemonApi.toPokemonEntity() : PokemonEntity {
              order = this.order,
              name = this.name,
              types1 = this.types[0].type.name,
-       //      types2 = this.types[1].type.name,
+             types2 = this.types[0].type.name,
              statsHp = this.stats[0].base_stat,
              statsAttack = this.stats[1].base_stat,
              statsDefense = this.stats[2].base_stat,
@@ -42,7 +42,7 @@ fun List<PokemonEntity>.toPokemon(): List<PokemonUI> = this.map{
         order = it.order,
         name = it.name,
         types1 = it.types1,
-     //   types2 = it.types2,
+        types2 = it.types2,
         statsHp = it.statsHp,
         statsAttack = it.statsAttack,
         statsDefense = it.statsDefense,

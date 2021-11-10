@@ -1,4 +1,4 @@
-package br.com.rafaeldias.apipokedex.api.repository
+package br.com.rafaeldias.apipokedex.data.repository
 
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 

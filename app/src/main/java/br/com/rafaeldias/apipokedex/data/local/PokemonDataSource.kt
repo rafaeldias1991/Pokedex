@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PokemonDataSource {
 
-    suspend fun getPokemons():Flow<List<PokemonUI>>
+    suspend fun getPokemons():List<PokemonUI>
     fun insertPokemons(list: List<ResultPokemonApi>)
     fun updatePokemon(pokemonEntity: PokemonEntity)
 

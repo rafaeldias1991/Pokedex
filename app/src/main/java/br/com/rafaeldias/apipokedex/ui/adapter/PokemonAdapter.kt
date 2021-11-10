@@ -1,7 +1,5 @@
 package br.com.rafaeldias.apipokedex.ui.adapter
 
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.rafaeldias.apipokedex.databinding.ItenPokemonBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
-import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import com.bumptech.glide.Glide
 import java.util.*
 
@@ -36,7 +33,7 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
             Glide.with(it.binding.root)
                 .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"+
                         "pokemon/other/official-artwork/${number}.png")
-                .timeout(6000)
+                .timeout(2000)
                 .into(it.binding.imgPokemon)
             holder.binding.cardPokemon.setOnClickListener {
                 val transition = HomeFragmentDirections
@@ -46,9 +43,6 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
             }
         }
     }
-
-  //  override fun getItemCount() = listPokemon.size
-
     class ViewHolder(
         val binding: ItenPokemonBinding
         ): RecyclerView.ViewHolder(binding.root)
@@ -64,7 +58,4 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
 
     }
 
-   // fun addItemInList(items: List<PokemonUI>) {
-   //     listPokemon.addAll(items)
-  //  }
 }

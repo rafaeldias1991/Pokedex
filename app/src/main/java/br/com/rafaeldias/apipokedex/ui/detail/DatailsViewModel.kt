@@ -1,9 +1,7 @@
 package br.com.rafaeldias.apipokedex.ui.detail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import br.com.rafaeldias.apipokedex.api.repository.Repository
-import br.com.rafaeldias.apipokedex.utils.State
+import br.com.rafaeldias.apipokedex.data.repository.Repository
 
 
 class DatailsViewModel(

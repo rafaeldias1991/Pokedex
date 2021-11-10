@@ -3,18 +3,17 @@ package br.com.rafaeldias.apipokedex.ui.detail
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
-import br.com.rafaeldias.apipokedex.data.model.Pokemon
+import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
-import br.com.rafaeldias.apipokedex.utils.State
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -33,58 +32,44 @@ class DatailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val number = args.number
+        loadDetail(number)
         binding.navController = findNavController()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val number = args.number
-      //  loadDetail(number)
-    }
-
-  /*  private fun loadDetail(number: Int) {
-        viewModel.fetchPokemonsDetail(number).observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is State.LoadingState -> {
-                }
-                is State.DataState -> {
-                    state.data?.let { PokemonDetail ->
-                        setDetailPokemonImage(PokemonDetail)
-                        setDetailPokemonType(PokemonDetail)
-                        setDetailPokemonProgressBar(PokemonDetail)
-                        PokeDetailColor(PokemonDetail)
-                    }
-                }
-                is State.ErrorState -> {
-                    Toast.makeText(requireContext(), state.exception.localizedMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }*/
-
-    fun setDetailPokemonProgressBar(it: Pokemon) {
-        binding.apply {
-            progressBarHp.progress = it.stats[0].base_stat.toFloat()
-            progressBarHp.labelText = it.stats[0].base_stat.toString().uppercase()
-
-            progressBarAtac.progress = it.stats[1].base_stat.toFloat()
-            progressBarAtac.labelText = it.stats[1].base_stat.toString().uppercase()
-
-            progressBarDef.progress = it.stats[2].base_stat.toFloat()
-            progressBarDef.labelText = it.stats[2].base_stat.toString().uppercase()
-
-            progressBarSpeed.progress = it.stats[3].base_stat.toFloat()
-            progressBarSpeed.labelText = it.stats[3].base_stat.toString().uppercase()
+    private fun loadDetail(number: Int){
+        viewModel.pokemonLiveData.observe(viewLifecycleOwner,){
+            setDetailPokemonImage(it.get(number-1))
+            setDetailPokemonProgressBar(it.get(number-1))
+            pokeDetailColor(it.get(number-1))
+            setDetailPokemonType(it.get(number-1))
 
         }
     }
 
-    fun PokeDetailColor(it: Pokemon) {
+    fun setDetailPokemonProgressBar(it: PokemonUI) {
+        binding.apply {
+            progressBarHp.progress = it.statsHp.toFloat()
+            progressBarHp.labelText = it.statsHp.toString().uppercase()
+            Log.e("number",it.order.toString())
+
+            progressBarAtac.progress = it.statsAttack.toFloat()
+            progressBarAtac.labelText = it.statsAttack.toString().uppercase()
+
+            progressBarDef.progress = it.statsDefense.toFloat()
+            progressBarDef.labelText = it.statsDefense.toString().uppercase()
+
+            progressBarSpeed.progress = it.statsSpeed.toFloat()
+            progressBarSpeed.labelText = it.statsSpeed.toString().uppercase()
+
+        }
+    }
+
+    fun pokeDetailColor(it: PokemonUI) {
         val context = requireContext()
-        val color = PokemonColor(context).getTypeColor(it.types[0].type.name)
-        if (it.types.size > 1) {
-            val color2 = PokemonColor(context).getTypeColor(it.types[1].type.name)
+        val color = PokemonColor(context).getTypeColor(it.types1)
+        if (it.types2 !=null) {
+            val color2 = PokemonColor(context).getTypeColor(it.types2)
             binding.tvType2.background.colorFilter
                 PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP)
         }
@@ -92,30 +77,30 @@ class DatailsFragment : Fragment() {
             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 
         activity?.window?.statusBarColor =
-            PokemonColor(context).getTypeColor(it.types[0].type.name)
+            PokemonColor(context).getTypeColor(it.types1)
         binding.tvType1.background.colorFilter =
             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
     }
 
-    private fun setDetailPokemonImage(it: Pokemon){
+    private fun setDetailPokemonImage(it: PokemonUI){
         binding.apply {
             Glide.with(root)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${it.id}.png")
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${it.order}.png")
                 .timeout(2000)
                 .into(imgPokemonDetail)
         }
     }
 
-    private fun setDetailPokemonType(it: Pokemon) {
+    private fun setDetailPokemonType(it: PokemonUI) {
         binding.apply {
             txNameDatail.text = it.name.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             }
             index.text = "Nº" + it.order
-            tvType1.text = it.types[0].type.name
-            if (it.types.size > 1) {
+            tvType1.text = it.types1
+            if (it.types2 ==null) {
                 tvType2.visibility = View.VISIBLE
-                tvType2.text = it.types[1].type.name
+                tvType2.text = it.types2
             } else {
                 tvType2.visibility = View.GONE
             }

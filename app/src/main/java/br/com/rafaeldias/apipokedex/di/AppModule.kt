@@ -1,7 +1,7 @@
 package br.com.rafaeldias.apipokedex.di
 
-import br.com.rafaeldias.apipokedex.api.repository.PokedexRepositoryImpl
-import br.com.rafaeldias.apipokedex.api.repository.Repository
+import br.com.rafaeldias.apipokedex.data.repository.PokedexRepositoryImpl
+import br.com.rafaeldias.apipokedex.data.repository.Repository
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSource
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSourceImp
 import br.com.rafaeldias.apipokedex.data.remote.PokedexApi

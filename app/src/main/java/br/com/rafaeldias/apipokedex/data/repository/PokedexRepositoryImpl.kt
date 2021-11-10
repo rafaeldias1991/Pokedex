@@ -1,4 +1,4 @@
-package br.com.rafaeldias.apipokedex.api.repository
+package br.com.rafaeldias.apipokedex.data.repository
 
 import android.util.Log
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSource
@@ -7,10 +7,7 @@ import br.com.rafaeldias.apipokedex.data.remote.PokedexApi
 import br.com.rafaeldias.apipokedex.data.remote.PokemonResultApi.ResultPokemonApi
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.utils.AppConstants.QUANTITY_POKEMON
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import org.jetbrains.annotations.NotNull
-import retrofit2.Response
 
 class PokedexRepositoryImpl(
     private val api: PokedexApi,
@@ -18,8 +15,8 @@ class PokedexRepositoryImpl(
 ) : Repository {
 
     override suspend fun fetchAllPokemonsDb(): List<PokemonUI> {
-        Log.e("resultdblist", pokemonDataSource.getPokemons().toString())
-        return pokemonDataSource.getPokemons().first()
+        Log.e("resultdblistsss", pokemonDataSource.getPokemons().toString())
+        return pokemonDataSource.getPokemons()
 
     }
 
@@ -29,7 +26,6 @@ class PokedexRepositoryImpl(
             Log.e("resultapi", result.toString())
             if (result.isSuccessful) {
                 getDetail(result.body()?.results)
-                // pokemonDataSource.insertPokemons(result.body()?.results)
             }
             return true
         } catch (e: Throwable) {
@@ -45,33 +41,23 @@ class PokedexRepositoryImpl(
         list?.forEach {
             name.add(it.name)
         }
-        Log.e("name_list", name.size.toString())
+        Log.e("name_list", name.toString())
 
         name.forEach {
-            val result = api.getPokemon(it)
+
             try {
+                val result = api.getPokemon(it)
                 if (result.isSuccessful) {
                     names.add(result.body()!!)
                 }
-                pokemonDataSource.insertPokemons(names.toList())
+                Log.e("names_list", names.toString())
+
             } catch (e: Exception) {
                 Log.e("api.getpokemon", e.toString())
             }
 
-
         }
         pokemonDataSource.insertPokemons(names.toList())
     }
-
-    /* val resultDetail =  api.getPokemon(it.name)
-     pokemonDataSource.insertPokemons(resultDetail.body())
-     Log.e("resultapiDe", resultDetail.toString())
-     if (resultDetail.isSuccessful)
-         pokemonDataSource.insertPokemons(resultDetail.body())
-
-
-
-
-}*/
 
 }

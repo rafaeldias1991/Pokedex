@@ -1,9 +1,7 @@
 package br.com.rafaeldias.apipokedex.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -55,33 +53,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer {
             binding.adapter = pokemonAdapter
             binding.rvListPokemon.adapter
-            Log.e("list_fragemnt",it.toString())
-
             pokemonAdapter.submitList(it)
         })
     }
-
-
-
-   /* private fun loadItems() {
-        viewModel.pokemonLivedata.observe(viewLifecycleOwne, { state ->
-            when (state) {
-                is State.LoadingState -> {
-                }
-                is State.DataState -> {
-                    state.data?.let { list ->
-                        binding.adapter = pokemonAdapter
-                        pokemonAdapter.addItemInList(list)
-                    }
-                }
-                is State.ErrorState -> {
-                    Toast.makeText(requireContext(), state.exception.localizedMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }*/
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -100,8 +74,4 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 }
