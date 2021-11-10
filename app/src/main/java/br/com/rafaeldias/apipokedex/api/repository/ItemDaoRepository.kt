@@ -15,6 +15,7 @@ class ItemDaoRepository {
     private val idao: PokemonService = ApiUtils.getItemsDaoInterface()
     private val pokeDetails: MutableLiveData<Pokemon> = MutableLiveData()
 
+
     fun bringItems(): MutableLiveData<List<Pokemon>> {
         return listPokemon
     }
@@ -22,7 +23,7 @@ class ItemDaoRepository {
         return pokeDetails
     }
     fun callListApi(){
-            idao.listPokemons(50)
+            idao.listPokemons(153)
             .enqueue(object : Callback<PokemonsApiResult> {
                 override fun onResponse(
                     call: Call<PokemonsApiResult>,
