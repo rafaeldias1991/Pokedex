@@ -1,45 +1,35 @@
 package br.com.rafaeldias.apipokedex.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import br.com.rafaeldias.apipokedex.api.repository.ItemDaoRepository
-import br.com.rafaeldias.apipokedex.api.repository.PokedexRepository
-import br.com.rafaeldias.apipokedex.domain.Pokemon
+import android.util.Log
+import androidx.lifecycle.*
+import br.com.rafaeldias.apipokedex.api.repository.Repository
+import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.utils.State
-import java.lang.Exception
+import com.skydoves.progressview.progressView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class HomeViewModel(
-    private val idaov: ItemDaoRepository,
-    private val pokedexRepository: PokedexRepository
+    private val pokedexRepository: Repository,
 ) : ViewModel() {
-    var pokemonData = MutableLiveData<List<Pokemon>>()
+
+    private val _pokemonLiveData: MutableLiveData<List<PokemonUI>> = MutableLiveData()
+    val pokemonLiveData: MutableLiveData<List<PokemonUI>>
+        get() = _pokemonLiveData
 
     init {
-        loadItems()
-        pokemonData = idaov.bringItems()
-
+        loadPokemon()
     }
 
-    fun loadItems(){
-       idaov.callListApi()
-    }
+    fun loadPokemon() {
+        viewModelScope.launch(Dispatchers.Default) {
+            pokedexRepository.fetchAllPokemons()
+            _pokemonLiveData.postValue(pokedexRepository.fetchAllPokemonsDb())
 
-    fun fetchPokemonsList() = liveData {
-        emit(State.LoadingState)
-        try {
-            val response = pokedexRepository.fetchAllPokemons(153)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    emit(State.DataState(it.results))
-                } ?: run {
-                    emit(State.DataState(null))
-                }
-            }
-        } catch (e: Exception) {
-            emit(State.ErrorState(e))
         }
     }
+
+
 }

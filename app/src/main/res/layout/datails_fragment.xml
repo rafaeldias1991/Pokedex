@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="pokemon"
-            type="br.com.rafaeldias.apipokedex.domain.Pokemon" />
+            name="pokemonApi"
+            type="br.com.rafaeldias.apipokedex.data.local.model.PokemonEntity" />
 
         <variable
             name="navController"

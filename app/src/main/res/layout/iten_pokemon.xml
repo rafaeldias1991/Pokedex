@@ -12,7 +12,7 @@
     android:id="@+id/card_Pokemon"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="25sp"
     app:cardElevation="4dp"
     android:shadowColor="@color/white">
@@ -46,7 +46,7 @@
             android:id="@+id/tx_name_poke"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pokemon_hollow"
+            android:fontFamily="@font/pokemon_solid"
             android:text="@{name}"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -15,6 +15,10 @@
             app:destination="@id/datailsFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false"
+            app:enterAnim="@anim/anim_enter"
+            app:exitAnim="@anim/anim_exit"
+            app:popEnterAnim="@anim/anim_popenter"
+            app:popExitAnim="@anim/anim_popexit"
             >
         </action>
 

@@ -1,16 +1,18 @@
 package br.com.rafaeldias.apipokedex.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.rafaeldias.apipokedex.R
-import br.com.rafaeldias.apipokedex.adapter.PokemonAdapter
+import br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter
 import br.com.rafaeldias.apipokedex.databinding.HomeFragmentBinding
-import br.com.rafaeldias.apipokedex.utils.State
+import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,21 +39,32 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         (activity as AppCompatActivity).setSupportActionBar(binding.myToolbar)
 
-        loadItems()
-/*        viewModel.pokemonData.observe(viewLifecycleOwner, {
-            if (it !=null){
-                binding.adapter = pokemonAdapter
-                pokemonAdapter.addItemInList(it)
-            }else{
-                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-            }
-        })
-        */
+
+
         return binding.root
     }
 
-    private fun loadItems() {
-        viewModel.fetchPokemonsList().observe(viewLifecycleOwner, { state ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadItems()
+        activity?.window?.statusBarColor = PokemonColor(view.context).getTypeColor("normal")
+
+    }
+
+    private fun loadItems(){
+        viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer {
+            binding.adapter = pokemonAdapter
+            binding.rvListPokemon.adapter
+            Log.e("list_fragemnt",it.toString())
+
+            pokemonAdapter.submitList(it)
+        })
+    }
+
+
+
+   /* private fun loadItems() {
+        viewModel.pokemonLivedata.observe(viewLifecycleOwne, { state ->
             when (state) {
                 is State.LoadingState -> {
                 }
@@ -66,7 +79,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
         })
-    }
+    }*/
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -87,6 +102,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onResume() {
         super.onResume()
-        //viewModel.loadItems()
+
     }
 }

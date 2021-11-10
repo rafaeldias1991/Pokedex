@@ -1,21 +1,28 @@
 package br.com.rafaeldias.apipokedex.ui.detail
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.rafaeldias.apipokedex.api.repository.ItemDaoRepository
-import br.com.rafaeldias.apipokedex.domain.Pokemon
+import androidx.lifecycle.liveData
+import br.com.rafaeldias.apipokedex.api.repository.Repository
+import br.com.rafaeldias.apipokedex.utils.State
 
 
 class DatailsViewModel(
-    private val idaod: ItemDaoRepository
+    private val pokedexRepository: Repository
 ) : ViewModel() {
 
-    var pokemonDataDetail = MutableLiveData<Pokemon>()
-
-
-    fun loadPokemonDetail(number: Int){
-        idaod.pokemonDetails(number)
-        pokemonDataDetail = idaod.bringInfoPoke()
-
-    }
+  /*  fun fetchPokemonsDetail(number: Int) = liveData {
+        emit(State.LoadingState)
+        try {
+            val response = pokedexRepository.fetchDetailPokemons(number)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(State.DataState(it))
+                } ?: run {
+                    emit(State.DataState(null))
+                }
+            }
+        } catch (e: Exception) {
+            emit(State.ErrorState(e))
+        }
+    }*/
 }
