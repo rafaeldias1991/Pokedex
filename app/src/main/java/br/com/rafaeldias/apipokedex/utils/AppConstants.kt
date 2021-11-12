@@ -4,5 +4,5 @@ object AppConstants {
 
     //ROOM
     const val DATABASE_NAME = "pokemonTable"
-    const val QUANTITY_POKEMON = 50
+    const val QUANTITY_POKEMON = 30
 }

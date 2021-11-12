@@ -2,18 +2,18 @@ package br.com.rafaeldias.apipokedex.ui.home
 
 import android.util.Log
 import androidx.lifecycle.*
-import br.com.rafaeldias.apipokedex.data.repository.Repository
+import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class HomeViewModel(
-    private val pokedexRepository: Repository,
+    private val pokedexRepository: PokedexRepository,
 ) : ViewModel() {
 
     private val _pokemonLiveData: MutableLiveData<List<PokemonUI>> = MutableLiveData()
-    val pokemonLiveData: MutableLiveData<List<PokemonUI>>
+    val pokemonLiveData: LiveData<List<PokemonUI>>
         get() = _pokemonLiveData
 
     init {

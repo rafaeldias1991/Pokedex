@@ -1,7 +1,7 @@
 package br.com.rafaeldias.apipokedex.di
 
 import br.com.rafaeldias.apipokedex.data.repository.PokedexRepositoryImpl
-import br.com.rafaeldias.apipokedex.data.repository.Repository
+import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSource
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSourceImp
 import br.com.rafaeldias.apipokedex.data.remote.PokedexApi
@@ -26,7 +26,7 @@ private val adapterModule = module {
     factory { PokemonAdapter() }
 }
 private val repositoryModule = module {
-    factory<Repository>{ PokedexRepositoryImpl(
+    factory<PokedexRepository>{ PokedexRepositoryImpl(
         api = get(),
         pokemonDataSource = get()) }
 

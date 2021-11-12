@@ -12,41 +12,15 @@ import kotlinx.parcelize.Parcelize
 data class PokemonEntity(
     val order: Int ,
     @PrimaryKey
+    val id: Int,
     val name: String,
+    val url: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png",
     val statsHp: Int,
     val statsAttack: Int,
     val statsDefense: Int,
     val statsSpeed: Int,
     val types1: String,
     val types2: String
-
 ): Parcelable
 
-fun ResultPokemonApi.toPokemonEntity() : PokemonEntity {
-     return with(this){
-         PokemonEntity(
-             order = this.order,
-             name = this.name,
-             types1 = this.types[0].type.name,
-             types2 = this.types[0].type.name,
-             statsHp = this.stats[0].base_stat,
-             statsAttack = this.stats[1].base_stat,
-             statsDefense = this.stats[2].base_stat,
-             statsSpeed = this.stats[3].base_stat)
-     }
-}
-
-
-fun List<PokemonEntity>.toPokemon(): List<PokemonUI> = this.map{
-    PokemonUI(
-        order = it.order,
-        name = it.name,
-        types1 = it.types1,
-        types2 = it.types2,
-        statsHp = it.statsHp,
-        statsAttack = it.statsAttack,
-        statsDefense = it.statsDefense,
-        statsSpeed = it.statsSpeed
-    )
-}
 

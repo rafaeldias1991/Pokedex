@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
+import br.com.rafaeldias.apipokedex.ui.imageFromUrl
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,12 +39,11 @@ class DatailsFragment : Fragment() {
     }
 
     private fun loadDetail(number: Int){
-        viewModel.pokemonLiveData.observe(viewLifecycleOwner,){
-            setDetailPokemonImage(it.get(number-1))
-            setDetailPokemonProgressBar(it.get(number-1))
-            pokeDetailColor(it.get(number-1))
-            setDetailPokemonType(it.get(number-1))
-
+        viewModel.pokemonLiveData.observe(viewLifecycleOwner,){pokemonList ->
+            setDetailPokemonImage(pokemonList.get(number))
+            setDetailPokemonProgressBar(pokemonList.get(number))
+            pokeDetailColor(pokemonList.get(number))
+            setDetailPokemonType(pokemonList.get(number))
         }
     }
 
@@ -51,7 +51,6 @@ class DatailsFragment : Fragment() {
         binding.apply {
             progressBarHp.progress = it.statsHp.toFloat()
             progressBarHp.labelText = it.statsHp.toString().uppercase()
-            Log.e("number",it.order.toString())
 
             progressBarAtac.progress = it.statsAttack.toFloat()
             progressBarAtac.labelText = it.statsAttack.toString().uppercase()
@@ -83,12 +82,7 @@ class DatailsFragment : Fragment() {
     }
 
     private fun setDetailPokemonImage(it: PokemonUI){
-        binding.apply {
-            Glide.with(root)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${it.order}.png")
-                .timeout(2000)
-                .into(imgPokemonDetail)
-        }
+        binding.imgPokemonDetail.imageFromUrl(it.urlImg)
     }
 
     private fun setDetailPokemonType(it: PokemonUI) {

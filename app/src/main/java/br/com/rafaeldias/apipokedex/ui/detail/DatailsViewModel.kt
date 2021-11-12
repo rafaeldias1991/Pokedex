@@ -1,11 +1,11 @@
 package br.com.rafaeldias.apipokedex.ui.detail
 
 import androidx.lifecycle.ViewModel
-import br.com.rafaeldias.apipokedex.data.repository.Repository
+import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 
 
 class DatailsViewModel(
-    private val pokedexRepository: Repository
+    private val pokedexRepository: PokedexRepository
 ) : ViewModel() {
 
   /*  fun fetchPokemonsDetail(number: Int) = liveData {

@@ -1,6 +1,8 @@
 package br.com.rafaeldias.apipokedex.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
@@ -9,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.rafaeldias.apipokedex.databinding.ItenPokemonBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
+import br.com.rafaeldias.apipokedex.ui.imageFromUrl
+import br.com.rafaeldias.apipokedex.utils.PokemonColor
+import br.com.rafaeldias.apipokedex.utils.formatTitle
 import com.bumptech.glide.Glide
 import java.util.*
 
 class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonUICallBack()){
-    private lateinit var binding: ItenPokemonBinding
+    protected lateinit var binding: ItenPokemonBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         binding = ItenPokemonBinding
@@ -25,16 +30,8 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
        val item =  getItem(position)
         holder.let {
             val number = item.order
-            it.binding.name = item.name.replaceFirstChar {
-                if (it.isLowerCase())
-                    it.titlecase(Locale.getDefault()
-                    )else it.toString()
-            }
-            Glide.with(it.binding.root)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"+
-                        "pokemon/other/official-artwork/${number}.png")
-                .timeout(2000)
-                .into(it.binding.imgPokemon)
+            it.binding.name = formatTitle(item.name)
+            it.binding.imgPokemon.imageFromUrl(item.urlImg)
             holder.binding.cardPokemon.setOnClickListener {
                 val transition = HomeFragmentDirections
                     .actionHomeFragmentToDatailsFragment(number = number)
@@ -43,9 +40,7 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
             }
         }
     }
-    class ViewHolder(
-        val binding: ItenPokemonBinding
-        ): RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItenPokemonBinding): RecyclerView.ViewHolder(binding.root)
 
     class PokemonUICallBack: DiffUtil.ItemCallback<PokemonUI>() {
         override fun areItemsTheSame(oldItem: PokemonUI, newItem: PokemonUI): Boolean {
@@ -57,5 +52,6 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
         }
 
     }
+
 
 }
