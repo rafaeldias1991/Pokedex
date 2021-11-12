@@ -10,7 +10,7 @@
 
         <variable
             name="adapter"
-            type="br.com.rafaeldias.apipokedex.adapter.PokemonAdapter" />
+            type="br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter" />
     </data>
 
     <FrameLayout

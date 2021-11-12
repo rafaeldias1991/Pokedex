@@ -1,12 +1,9 @@
 package br.com.rafaeldias.apipokedex
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.appcompat.app.AppCompatActivity
 import br.com.rafaeldias.apipokedex.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 

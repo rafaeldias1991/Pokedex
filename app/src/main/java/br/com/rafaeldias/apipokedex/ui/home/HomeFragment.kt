@@ -3,15 +3,25 @@ package br.com.rafaeldias.apipokedex.ui.home
 
 import android.os.Bundle
 import android.view.*
+<<<<<<< HEAD
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+=======
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+>>>>>>> master
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.rafaeldias.apipokedex.R
-import br.com.rafaeldias.apipokedex.adapter.PokemonAdapter
+import br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter
 import br.com.rafaeldias.apipokedex.databinding.HomeFragmentBinding
+<<<<<<< HEAD
+=======
+import br.com.rafaeldias.apipokedex.utils.PokemonColor
+>>>>>>> master
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +51,7 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         binding.rvListPokemon.layoutManager=GridLayoutManager(requireContext(),2)
 
         (activity as AppCompatActivity).setSupportActionBar(binding.myToolbar)
+<<<<<<< HEAD
         viewModel.pokemonData.observe(viewLifecycleOwner ,Observer {
             if (it !=null){
                 binding.adapter = pokemonAdapter
@@ -52,6 +63,29 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         return binding.root
     }
 
+=======
+
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadItems()
+        activity?.window?.statusBarColor = PokemonColor(view.context).getTypeColor("normal")
+
+    }
+
+    private fun loadItems(){
+        viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer {
+            binding.adapter = pokemonAdapter
+            binding.rvListPokemon.adapter
+            pokemonAdapter.submitList(it)
+        })
+    }
+
+>>>>>>> master
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_searchbar,menu)
@@ -68,8 +102,11 @@ class HomeFragment: Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
+<<<<<<< HEAD
     override fun onResume() {
         super.onResume()
         viewModel.loadItems()
     }
+=======
+>>>>>>> master
 }
