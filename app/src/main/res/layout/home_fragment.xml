@@ -32,10 +32,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="Pokedex API"
-                android:background="@color/white"
+                android:background="@color/normal"
                 app:titleTextColor="@color/yellow"
                 app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
                  />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_pokemon"

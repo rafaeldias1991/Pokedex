@@ -8,16 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import br.com.rafaeldias.apipokedex.R
 import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
 import br.com.rafaeldias.apipokedex.ui.imageFromUrl
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
-import com.bumptech.glide.Glide
+import br.com.rafaeldias.apipokedex.utils.formatTitle
+import br.com.rafaeldias.apipokedex.utils.setImageButtonFavorite
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 
 class DatailsFragment : Fragment() {
@@ -27,48 +29,62 @@ class DatailsFragment : Fragment() {
     private val binding: DatailsFragmentBinding by lazy {
         DatailsFragmentBinding.inflate(layoutInflater)
     }
+    lateinit var pokemon : PokemonUI
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val number = args.number
-        loadDetail(number)
+        val id = args.number
+        loadDetail(id)
         binding.navController = findNavController()
         return binding.root
+
     }
 
-    private fun loadDetail(number: Int){
-        viewModel.pokemonLiveData.observe(viewLifecycleOwner,){pokemonList ->
-            setDetailPokemonImage(pokemonList.get(number))
-            setDetailPokemonProgressBar(pokemonList.get(number))
-            pokeDetailColor(pokemonList.get(number))
-            setDetailPokemonType(pokemonList.get(number))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnFavorite.setOnClickListener {
+            Log.e("save",pokemon.favorite.toString())
+            updateFavoritePokemon(pokemon)
         }
     }
 
-    fun setDetailPokemonProgressBar(it: PokemonUI) {
+
+
+    private fun loadDetail(id: Int){
+        viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer { pokemonList ->
+            pokemon = pokemonList.get(id-1)
+            binding.btnFavorite.setImageButtonFavorite(pokemon.favorite)
+            setDetailPokemonImage(pokemon)
+            setDetailPokemonProgressBar(pokemon)
+            pokeDetailColor(pokemon)
+            setDetailPokemonType(pokemon)
+        })
+    }
+
+    fun setDetailPokemonProgressBar(pokemon: PokemonUI) {
         binding.apply {
-            progressBarHp.progress = it.statsHp.toFloat()
-            progressBarHp.labelText = it.statsHp.toString().uppercase()
+            progressBarHp.progress = pokemon.statsHp.toFloat()
+            progressBarHp.labelText = pokemon.statsHp.toString().uppercase()
 
-            progressBarAtac.progress = it.statsAttack.toFloat()
-            progressBarAtac.labelText = it.statsAttack.toString().uppercase()
+            progressBarAtac.progress = pokemon.statsAttack.toFloat()
+            progressBarAtac.labelText = pokemon.statsAttack.toString().uppercase()
 
-            progressBarDef.progress = it.statsDefense.toFloat()
-            progressBarDef.labelText = it.statsDefense.toString().uppercase()
+            progressBarDef.progress = pokemon.statsDefense.toFloat()
+            progressBarDef.labelText = pokemon.statsDefense.toString().uppercase()
 
-            progressBarSpeed.progress = it.statsSpeed.toFloat()
-            progressBarSpeed.labelText = it.statsSpeed.toString().uppercase()
+            progressBarSpeed.progress = pokemon.statsSpeed.toFloat()
+            progressBarSpeed.labelText = pokemon.statsSpeed.toString().uppercase()
 
         }
     }
 
-    fun pokeDetailColor(it: PokemonUI) {
+    fun pokeDetailColor(pokemon: PokemonUI) {
         val context = requireContext()
-        val color = PokemonColor(context).getTypeColor(it.types1)
-        if (it.types2 !=null) {
-            val color2 = PokemonColor(context).getTypeColor(it.types2)
+        val color = PokemonColor(context).getTypeColor(pokemon.types1)
+        if (pokemon.types2 !=null) {
+            val color2 = PokemonColor(context).getTypeColor(pokemon.types2)
             binding.tvType2.background.colorFilter
                 PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP)
         }
@@ -76,28 +92,38 @@ class DatailsFragment : Fragment() {
             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 
         activity?.window?.statusBarColor =
-            PokemonColor(context).getTypeColor(it.types1)
+            PokemonColor(context).getTypeColor(pokemon.types1)
         binding.tvType1.background.colorFilter =
             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
     }
 
-    private fun setDetailPokemonImage(it: PokemonUI){
-        binding.imgPokemonDetail.imageFromUrl(it.urlImg)
+    private fun setDetailPokemonImage(pokemon: PokemonUI){
+        binding.imgPokemonDetail.imageFromUrl(pokemon.urlImg)
     }
 
-    private fun setDetailPokemonType(it: PokemonUI) {
+    private fun setDetailPokemonType(pokemon: PokemonUI) {
         binding.apply {
-            txNameDatail.text = it.name.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-            }
-            index.text = "Nº" + it.order
-            tvType1.text = it.types1
-            if (it.types2 ==null) {
+            txNameDatail.text = formatTitle(pokemon.name)
+            index.text = pokemon.formattedNumber
+            tvType1.text = pokemon.types1
+            if (pokemon.types2 ==null) {
                 tvType2.visibility = View.VISIBLE
-                tvType2.text = it.types2
+                tvType2.text = pokemon.types2
             } else {
                 tvType2.visibility = View.GONE
             }
         }
     }
+
+
+    fun updateFavoritePokemon(pokemon: PokemonUI){
+           if (pokemon.favorite == true){
+               binding.btnFavorite.setImageResource(R.drawable.pokeball_open)
+               viewModel.updatePokemonFavorite(pokemon.id,false)}
+           else{
+               binding.btnFavorite.setImageResource(R.drawable.pokeball_close)
+               viewModel.updatePokemonFavorite(pokemon.id,true)}
+
+    }
+
 }

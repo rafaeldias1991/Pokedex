@@ -3,8 +3,8 @@ package br.com.rafaeldias.apipokedex.data.local.model
 import br.com.rafaeldias.apipokedex.data.remote.PokemonResultApi.ResultPokemonApi
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 
-fun ResultPokemonApi.toPokemonEntity() : PokemonEntity {
-    return with(this){
+fun ResultPokemonApi.toPokemonEntity(): PokemonEntity {
+    return with(this) {
         PokemonEntity(
             order = this.id,
             name = this.name,
@@ -14,12 +14,13 @@ fun ResultPokemonApi.toPokemonEntity() : PokemonEntity {
             statsHp = this.stats[0].base_stat,
             statsAttack = this.stats[1].base_stat,
             statsDefense = this.stats[2].base_stat,
-            statsSpeed = this.stats[3].base_stat)
+            statsSpeed = this.stats[3].base_stat
+        )
     }
 }
 
 
-fun List<PokemonEntity>.toPokemonUI(): List<PokemonUI> = this.map{
+fun List<PokemonEntity>.toPokemonUI(): List<PokemonUI> = this.map {
     PokemonUI(
         order = it.order,
         name = it.name,
@@ -30,6 +31,24 @@ fun List<PokemonEntity>.toPokemonUI(): List<PokemonUI> = this.map{
         statsHp = it.statsHp,
         statsAttack = it.statsAttack,
         statsDefense = it.statsDefense,
-        statsSpeed = it.statsSpeed
+        statsSpeed = it.statsSpeed,
+        favorite = it.favorite
     )
+}
+
+fun PokemonUI.toPokemonEntity(): PokemonEntity {
+    return with(this) {
+        PokemonEntity(
+            order = this.id,
+            name = this.name,
+            id = this.id,
+            types1 = this.types1,
+            types2 = this.types2,
+            statsHp = this.statsHp,
+            statsAttack = this.statsAttack,
+            statsDefense = this.statsDefense,
+            statsSpeed = this.statsSpeed,
+            favorite = this.favorite
+        )
+    }
 }

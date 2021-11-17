@@ -16,10 +16,7 @@ data class Pokemon(
     val stats:  List<Stat>,
     val types: List<Type>
 )
-{
-    // val formattedNumber = order.toString().padStart(3, '0')
 
-}
 data class Stat(
     val base_stat: Int,
     val effort: Int,

@@ -17,10 +17,8 @@ interface PokeDAO {
     @Query("SELECT * FROM pokemon_table")
      fun getAllPokemon(): List<PokemonEntity>
 
-
-
-    @Update
-    fun updatePokemon(pokemonEntity: PokemonEntity)
+    @Query("UPDATE pokemon_table SET favorite=:favorite WHERE id= :id")
+    suspend fun updatePokemon(id: Int,favorite : Boolean)
 
      @Query("DELETE FROM pokemon_table")
      suspend fun deleteAllPokemon()

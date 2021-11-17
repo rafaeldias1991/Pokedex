@@ -42,4 +42,5 @@
     <color name="defesa">#179A55</color>
     <color name="ataque">#FBC02D</color>
     <color name="speed">#7ECFF2</color>
+    <color name="action_bar">#2192C6</color>
 </resources>

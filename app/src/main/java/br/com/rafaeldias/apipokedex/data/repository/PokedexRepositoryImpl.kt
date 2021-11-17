@@ -19,6 +19,10 @@ class PokedexRepositoryImpl(
 
     }
 
+    override suspend fun updateFavoritePokemon(id:Int,favorite:Boolean){
+       pokemonDataSource.updatePokemon(id,favorite)
+    }
+
     override suspend fun fetchAllPokemons(): Boolean {
         try {
             val result = api.listPokemons(QUANTITY_POKEMON)
@@ -30,7 +34,6 @@ class PokedexRepositoryImpl(
         } catch (e: Throwable) {
             return false
         }
-
     }
 
     suspend fun getDetail(list: List<Pokemon>?) {
@@ -39,7 +42,6 @@ class PokedexRepositoryImpl(
         list?.forEach {
             allNamesPokemons.add(it.name)
         }
-
         allNamesPokemons.forEach {
             try {
                 val result = api.getPokemon(it)

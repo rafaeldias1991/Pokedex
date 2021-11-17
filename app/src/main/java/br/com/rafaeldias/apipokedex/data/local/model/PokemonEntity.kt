@@ -13,6 +13,7 @@ data class PokemonEntity(
     val order: Int ,
     @PrimaryKey
     val id: Int,
+    @ColumnInfo(name = "poke_name")
     val name: String,
     val url: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png",
     val statsHp: Int,
@@ -20,7 +21,9 @@ data class PokemonEntity(
     val statsDefense: Int,
     val statsSpeed: Int,
     val types1: String,
-    val types2: String
+    val types2: String,
+    @ColumnInfo(name ="favorite")
+    val favorite: Boolean = false
 ): Parcelable
 
 

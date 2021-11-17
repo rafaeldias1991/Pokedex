@@ -10,7 +10,7 @@ interface PokemonDataSource {
 
     suspend fun getPokemons():List<PokemonUI>
     fun insertPokemons(list: List<ResultPokemonApi>)
-    fun updatePokemon(pokemonEntity: PokemonEntity)
+    suspend fun updatePokemon(id: Int,favorite: Boolean)
 
 
 }
