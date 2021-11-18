@@ -2,6 +2,7 @@ package br.com.rafaeldias.apipokedex.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,9 +14,14 @@ import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
 import br.com.rafaeldias.apipokedex.ui.imageFromUrl
 import br.com.rafaeldias.apipokedex.utils.formatTitle
 import br.com.rafaeldias.apipokedex.utils.setImageFavorite
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonUICallBack()){
-    protected lateinit var binding: ItenPokemonBinding
+     lateinit var binding: ItenPokemonBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         binding = ItenPokemonBinding
@@ -23,6 +29,8 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
             )
         return ViewHolder(binding)
     }
+
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val item = getItem(position)
@@ -49,10 +57,14 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
         }
 
         override fun areContentsTheSame(oldItem: PokemonUI, newItem: PokemonUI): Boolean {
-            return oldItem == newItem
+            return oldItem.name == newItem.name
         }
 
+
     }
+
+
+
 
 }
 

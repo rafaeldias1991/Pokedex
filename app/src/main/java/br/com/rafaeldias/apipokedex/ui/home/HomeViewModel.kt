@@ -5,15 +5,18 @@ import android.util.Log
 import androidx.lifecycle.*
 import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
+import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.getScopeId
 
 class HomeViewModel(
-    private val pokedexRepository: PokedexRepository
+    private val pokedexRepository: PokedexRepository,
+    applySearchFilterName: ApplySearchFilterName
 
 ) : ViewModel() {
 
-    private var _pokemonLiveData : MutableLiveData<List<PokemonUI>> = MutableLiveData()
+    private val _pokemonLiveData = MutableLiveData<List<PokemonUI>>()
     val pokemonLiveData: LiveData<List<PokemonUI>>
         get() = _pokemonLiveData
 
@@ -39,14 +42,31 @@ class HomeViewModel(
         }
     }
 
-    fun updatePokemonFavorite(id: Int,favorite: Boolean) {
+    fun updatePokemonFavorite(id: Int, favorite: Boolean) {
         viewModelScope.launch(Dispatchers.Default) {
             pokedexRepository.updateFavoritePokemon(id, favorite)
             _pokemonLiveData.value?.map {
                 it.favorite = favorite
-
             }
+            Log.e("statusLivedata", pokemonLiveData.value?.get(1)?.favorite.toString())
+            Log.e("statusMutableLivedata", pokemonLiveData.value?.get(1)?.favorite.toString())
         }
     }
+
+
+    private val _searchQuery = MutableLiveData<CharSequence>("")
+    val searchQuery: LiveData<CharSequence>
+        get() = _searchQuery
+
+
+    fun setSearchQuery(query: CharSequence?) {
+        query?.let {
+            _searchQuery.value = it
+        }
+    }
+
+    val filteredListBusinessCard: LiveData<List<PokemonUI>> =
+        applySearchFilterName.filterList(pokemonLiveData, searchQuery)
+
 
 }

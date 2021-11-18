@@ -6,6 +6,7 @@ import br.com.rafaeldias.apipokedex.data.local.PokemonDataSource
 import br.com.rafaeldias.apipokedex.data.local.PokemonDataSourceImp
 import br.com.rafaeldias.apipokedex.data.remote.PokedexApi
 import br.com.rafaeldias.apipokedex.data.remote.ServiceClient
+import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter
 import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,12 +18,13 @@ private val pokedexModule = module {
 }
 
 private val viewModelModule = module {
-    viewModel { HomeViewModel( pokedexRepository = get())}
+    viewModel { HomeViewModel( pokedexRepository = get(),applySearchFilterName = get())}
 
 }
 
 private val adapterModule = module {
     factory { PokemonAdapter() }
+    factory { ApplySearchFilterName() }
 }
 private val repositoryModule = module {
     factory<PokedexRepository>{ PokedexRepositoryImpl(
