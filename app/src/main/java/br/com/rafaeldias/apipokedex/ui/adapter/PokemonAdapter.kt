@@ -63,9 +63,6 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
 
     }
 
-
-
-
 }
 
 

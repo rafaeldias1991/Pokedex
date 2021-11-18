@@ -50,7 +50,6 @@ class HomeFragment : Fragment() {
 
     private fun loadItems(){
         viewModel.filteredListBusinessCard.observe( viewLifecycleOwner) {
-            Log.e("status",it[1].favorite.toString())
             initSearchBar()
             binding.adapter = pokemonAdapter
             binding.rvListPokemon.adapter

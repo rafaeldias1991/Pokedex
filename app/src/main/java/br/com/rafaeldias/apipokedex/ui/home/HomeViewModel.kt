@@ -8,7 +8,7 @@ import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.getScopeId
+
 
 class HomeViewModel(
     private val pokedexRepository: PokedexRepository,
@@ -48,8 +48,7 @@ class HomeViewModel(
             _pokemonLiveData.value?.map {
                 it.favorite = favorite
             }
-            Log.e("statusLivedata", pokemonLiveData.value?.get(1)?.favorite.toString())
-            Log.e("statusMutableLivedata", pokemonLiveData.value?.get(1)?.favorite.toString())
+
         }
     }
 
