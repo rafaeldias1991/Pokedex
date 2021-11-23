@@ -45,7 +45,6 @@ class DatailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnFavorite.setOnClickListener {
-            Log.e("save",pokemon.favorite.toString())
             updateFavoritePokemon(pokemon)
         }
     }
@@ -54,6 +53,7 @@ class DatailsFragment : Fragment() {
 
     private fun loadDetail(id: Int){
         viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer { pokemonList ->
+            Log.e("PokemonChegaNoFragDet", pokemonList[1].favorite.toString() + pokemonList[1].name)
             pokemon = pokemonList.get(id-1)
             binding.btnFavorite.setImageButtonFavorite(pokemon.favorite)
             setDetailPokemonImage(pokemon)
@@ -125,5 +125,6 @@ class DatailsFragment : Fragment() {
                viewModel.updatePokemonFavorite(pokemon.id,true)}
 
     }
+
 
 }

@@ -19,8 +19,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonUICallBack()){
-     lateinit var binding: ItenPokemonBinding
+class PokemonAdapter: RecyclerView.Adapter<PokemonAdapter.ViewHolder>(){
+    lateinit var binding: ItenPokemonBinding
+
+    private val oldPokemon = mutableListOf<PokemonUI>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -30,10 +33,8 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
         return ViewHolder(binding)
     }
 
-
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       val item = getItem(position)
+        val item = oldPokemon[position]
         holder.let {
             val id = item.id
             it.binding.imgFavorite.setImageFavorite(item.favorite)
@@ -51,17 +52,18 @@ class PokemonAdapter: ListAdapter<PokemonUI, PokemonAdapter.ViewHolder>(PokemonU
     }
     class ViewHolder(val binding: ItenPokemonBinding): RecyclerView.ViewHolder(binding.root)
 
-    class PokemonUICallBack: DiffUtil.ItemCallback<PokemonUI>() {
-        override fun areItemsTheSame(oldItem: PokemonUI, newItem: PokemonUI): Boolean {
-            return oldItem.favorite == newItem.favorite
-        }
-
-        override fun areContentsTheSame(oldItem: PokemonUI, newItem: PokemonUI): Boolean {
-            return oldItem.name == newItem.name
-        }
-
-
+    override fun getItemCount(): Int {
+        return oldPokemon.size
     }
+
+    fun swap(newPokemon: List<PokemonUI>) {
+        val diffCallback = MyDiffUtil(this.oldPokemon, newPokemon)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.oldPokemon.clear()
+        this.oldPokemon.addAll(newPokemon)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
 
 }
 

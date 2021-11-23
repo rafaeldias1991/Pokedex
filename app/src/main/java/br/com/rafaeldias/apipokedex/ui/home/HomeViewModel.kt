@@ -7,6 +7,8 @@ import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -16,6 +18,7 @@ class HomeViewModel(
 
 ) : ViewModel() {
 
+
     private val _pokemonLiveData = MutableLiveData<List<PokemonUI>>()
     val pokemonLiveData: LiveData<List<PokemonUI>>
         get() = _pokemonLiveData
@@ -24,17 +27,18 @@ class HomeViewModel(
         loadPokemon()
     }
 
+
     fun loadPokemon() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = pokedexRepository.fetchAllPokemonsDb()
-                if (result.isEmpty()) {
-                    val result = pokedexRepository.fetchAllPokemons()
-                    if (result == true) {
+                val resultDb = pokedexRepository.fetchAllPokemonsDb()
+                if (resultDb.isEmpty()) {
+                    val resultApi = pokedexRepository.fetchAllPokemons()
+                    if (resultApi == true) {
                         _pokemonLiveData.postValue(pokedexRepository.fetchAllPokemonsDb())
                     }
                 } else {
-                    _pokemonLiveData.postValue(result)
+                    _pokemonLiveData.postValue(resultDb)
                 }
             } catch (e: Exception) {
                 Log.e("loadPokemon", e.toString())
@@ -45,13 +49,9 @@ class HomeViewModel(
     fun updatePokemonFavorite(id: Int, favorite: Boolean) {
         viewModelScope.launch(Dispatchers.Default) {
             pokedexRepository.updateFavoritePokemon(id, favorite)
-            _pokemonLiveData.value?.map {
-                it.favorite = favorite
-            }
-
+            _pokemonLiveData.value?.get(id-1)?.favorite = favorite
         }
     }
-
 
     private val _searchQuery = MutableLiveData<CharSequence>("")
     val searchQuery: LiveData<CharSequence>
@@ -64,7 +64,7 @@ class HomeViewModel(
         }
     }
 
-    val filteredListBusinessCard: LiveData<List<PokemonUI>> =
+    val filteredListPokemon: LiveData<List<PokemonUI>> =
         applySearchFilterName.filterList(pokemonLiveData, searchQuery)
 
 

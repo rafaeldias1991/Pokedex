@@ -28,39 +28,53 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding.rvListPokemon.layoutManager = GridLayoutManager(requireContext(), 2)
         (activity as AppCompatActivity).setSupportActionBar(binding.myToolbar)
+        loadItems()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.window?.statusBarColor = PokemonColor(view.context).getTypeColor("action_bar")
-        loadItems()
-
+        binding.adapter = pokemonAdapter
+        binding.rvListPokemon.adapter
     }
 
     private fun loadItems(){
-        viewModel.filteredListBusinessCard.observe( viewLifecycleOwner) {
+        viewModel.filteredListPokemon.observe(viewLifecycleOwner, Observer {
             initSearchBar()
-            binding.adapter = pokemonAdapter
-            binding.rvListPokemon.adapter
-            pokemonAdapter.submitList(it)
-        }
+            pokemonAdapter.swap(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
          super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_searchbar, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+                R.id.all_pokemons -> {
+                    viewModel.filteredListPokemon.observe(viewLifecycleOwner, Observer {
+                        pokemonAdapter.swap(it)
+                    })
+                true
+            }
+                R.id.favorites -> {
+                    viewModel.filteredListPokemon.observe(viewLifecycleOwner, Observer {
+                        pokemonAdapter.swap(mapFavorite(it))
+                    })
+                true
+            }
+                else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initSearchBar() {
@@ -73,7 +87,6 @@ class HomeFragment : Fragment() {
                 }
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
                     viewModel.setSearchQuery(it)
@@ -82,6 +95,11 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    fun mapFavorite(list: List<PokemonUI>): List<PokemonUI>{
+        val mapFavorite = list.filter { it.favorite == true}
+        return mapFavorite
     }
 
 }
