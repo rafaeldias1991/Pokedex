@@ -1,12 +1,12 @@
 package br.com.rafaeldias.apipokedex
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.appcompat.app.AppCompatActivity
+import br.com.rafaeldias.apipokedex.data.remote.PokemonResultApi.Home
 import br.com.rafaeldias.apipokedex.databinding.ActivityMainBinding
+import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,4 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
+    private val HomeViewModel by viewModel<HomeViewModel>()
+
 }

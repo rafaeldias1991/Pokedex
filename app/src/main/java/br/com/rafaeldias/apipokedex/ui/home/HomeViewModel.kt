@@ -1,45 +1,71 @@
 package br.com.rafaeldias.apipokedex.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import br.com.rafaeldias.apipokedex.api.repository.ItemDaoRepository
-import br.com.rafaeldias.apipokedex.api.repository.PokedexRepository
-import br.com.rafaeldias.apipokedex.domain.Pokemon
-import br.com.rafaeldias.apipokedex.utils.State
-import java.lang.Exception
+
+import android.util.Log
+import androidx.lifecycle.*
+import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
+import br.com.rafaeldias.apipokedex.ui.PokemonUI
+import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeViewModel(
-    private val idaov: ItemDaoRepository,
-    private val pokedexRepository: PokedexRepository
+    private val pokedexRepository: PokedexRepository,
+    applySearchFilterName: ApplySearchFilterName
+
 ) : ViewModel() {
-    var pokemonData = MutableLiveData<List<Pokemon>>()
+
+    private val _pokemonLiveData = MutableLiveData<List<PokemonUI>>()
+    val pokemonLiveData: LiveData<List<PokemonUI>>
+        get() = _pokemonLiveData
 
     init {
-        loadItems()
-        pokemonData = idaov.bringItems()
-
+        loadPokemon()
     }
 
-    fun loadItems(){
-       idaov.callListApi()
-    }
-
-    fun fetchPokemonsList() = liveData {
-        emit(State.LoadingState)
-        try {
-            val response = pokedexRepository.fetchAllPokemons(153)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    emit(State.DataState(it.results))
-                } ?: run {
-                    emit(State.DataState(null))
+    fun loadPokemon() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = pokedexRepository.fetchAllPokemonsDb()
+                if (result.isEmpty()) {
+                    val result = pokedexRepository.fetchAllPokemons()
+                    if (result == true) {
+                        _pokemonLiveData.postValue(pokedexRepository.fetchAllPokemonsDb())
+                    }
+                } else {
+                    _pokemonLiveData.postValue(result)
                 }
+            } catch (e: Exception) {
+                Log.e("loadPokemon", e.toString())
             }
-        } catch (e: Exception) {
-            emit(State.ErrorState(e))
         }
     }
+
+    fun updatePokemonFavorite(id: Int, favorite: Boolean) {
+        viewModelScope.launch(Dispatchers.Default) {
+            pokedexRepository.updateFavoritePokemon(id, favorite)
+            _pokemonLiveData.value?.map {
+                it.favorite = favorite
+            }
+
+        }
+    }
+
+
+    private val _searchQuery = MutableLiveData<CharSequence>("")
+    val searchQuery: LiveData<CharSequence>
+        get() = _searchQuery
+
+
+    fun setSearchQuery(query: CharSequence?) {
+        query?.let {
+            _searchQuery.value = it
+        }
+    }
+
+    val filteredListBusinessCard: LiveData<List<PokemonUI>> =
+        applySearchFilterName.filterList(pokemonLiveData, searchQuery)
+
+
 }

@@ -10,7 +10,7 @@
 
         <variable
             name="adapter"
-            type="br.com.rafaeldias.apipokedex.adapter.PokemonAdapter" />
+            type="br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter" />
     </data>
 
     <FrameLayout
@@ -32,10 +32,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="Pokedex API"
-                android:background="@color/white"
+                android:background="@color/normal"
                 app:titleTextColor="@color/yellow"
                 app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
                  />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/homeSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/myToolbar"
+                app:queryHint="Procurar um Pokemon" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_pokemon"
@@ -48,7 +60,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/constraint"
-                app:layout_constraintTop_toBottomOf="@+id/myToolbar" />
+                app:layout_constraintTop_toBottomOf="@+id/homeSearchView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

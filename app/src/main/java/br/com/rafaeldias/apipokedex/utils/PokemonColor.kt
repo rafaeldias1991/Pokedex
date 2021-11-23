@@ -13,7 +13,7 @@ class PokemonColor(var context: Context) {
         val color = when (type) {
             "normal" -> R.color.normal
             "fighting" -> R.color.fighting
-            "charmander" -> R.color.fighting
+            "action_bar" -> R.color.action_bar
             "flying" -> R.color.flying
             "poison" -> R.color.poison
             "ground" -> R.color.ground
