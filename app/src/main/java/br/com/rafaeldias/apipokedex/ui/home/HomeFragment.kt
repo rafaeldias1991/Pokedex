@@ -1,7 +1,6 @@
 package br.com.rafaeldias.apipokedex.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -12,9 +11,10 @@ import br.com.rafaeldias.apipokedex.R
 import br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter
 import br.com.rafaeldias.apipokedex.databinding.HomeFragmentBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
+import br.com.rafaeldias.apipokedex.ui.viewmodel.SharedViewModel
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
         HomeFragmentBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: SharedViewModel by sharedViewModel()
     private val pokemonAdapter: PokemonAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +48,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadItems(){
-        viewModel.filteredListPokemon.observe(viewLifecycleOwner, Observer {
+        viewModel.filteredListPokemon.observe(viewLifecycleOwner,Observer { pokemonList ->
             initSearchBar()
-            pokemonAdapter.swap(it)
+            pokemonAdapter.swap(pokemonList)
         })
     }
 
@@ -101,5 +101,4 @@ class HomeFragment : Fragment() {
         val mapFavorite = list.filter { it.favorite == true}
         return mapFavorite
     }
-
 }

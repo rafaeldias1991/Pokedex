@@ -2,22 +2,16 @@ package br.com.rafaeldias.apipokedex.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.rafaeldias.apipokedex.databinding.ItenPokemonBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
-import br.com.rafaeldias.apipokedex.ui.Utils.colorCardView
+import br.com.rafaeldias.apipokedex.ui.utils.colorCardView
 import br.com.rafaeldias.apipokedex.ui.home.HomeFragmentDirections
 import br.com.rafaeldias.apipokedex.ui.imageFromUrl
 import br.com.rafaeldias.apipokedex.utils.formatTitle
 import br.com.rafaeldias.apipokedex.utils.setImageFavorite
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PokemonAdapter: RecyclerView.Adapter<PokemonAdapter.ViewHolder>(){
     lateinit var binding: ItenPokemonBinding

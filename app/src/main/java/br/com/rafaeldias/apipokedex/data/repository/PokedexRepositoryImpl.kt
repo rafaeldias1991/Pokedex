@@ -14,7 +14,7 @@ class PokedexRepositoryImpl(
 ) : PokedexRepository {
 
     override suspend fun fetchAllPokemonsDb(): List<PokemonUI> {
-        Log.e("resultdblist_repository", pokemonDataSource.getPokemons().toString())
+        //Log.e("resultdblist_repository", pokemonDataSource.getPokemons().toString())
         return pokemonDataSource.getPokemons()
 
     }
@@ -26,7 +26,7 @@ class PokedexRepositoryImpl(
     override suspend fun fetchAllPokemons(): Boolean {
         try {
             val result = api.listPokemons(QUANTITY_POKEMON)
-            Log.e("resultapi", result.toString())
+          //  Log.e("resultapi", result.toString())
             if (result.isSuccessful) {
                 getDetail(result.body()?.results)
             }
@@ -49,7 +49,7 @@ class PokedexRepositoryImpl(
                 if (result.isSuccessful) {
                     listPokemons.add(result.body()!!)
                 }
-                Log.e("names_list", resultBody!!.name)
+               // Log.e("names_list", resultBody!!.name)
 
             } catch (e: Exception) {
                 Log.e("api.getpokemon", e.toString())

@@ -3,7 +3,6 @@ package br.com.rafaeldias.apipokedex.ui.detail
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,18 +13,18 @@ import androidx.navigation.fragment.navArgs
 import br.com.rafaeldias.apipokedex.R
 import br.com.rafaeldias.apipokedex.databinding.DatailsFragmentBinding
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
-import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
+import br.com.rafaeldias.apipokedex.ui.viewmodel.SharedViewModel
 import br.com.rafaeldias.apipokedex.ui.imageFromUrl
 import br.com.rafaeldias.apipokedex.utils.PokemonColor
 import br.com.rafaeldias.apipokedex.utils.formatTitle
 import br.com.rafaeldias.apipokedex.utils.setImageButtonFavorite
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class DatailsFragment : Fragment() {
 
     val args: DatailsFragmentArgs by navArgs()
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: SharedViewModel by sharedViewModel()
     private val binding: DatailsFragmentBinding by lazy {
         DatailsFragmentBinding.inflate(layoutInflater)
     }
@@ -37,6 +36,7 @@ class DatailsFragment : Fragment() {
     ): View? {
         val id = args.number
         loadDetail(id)
+
         binding.navController = findNavController()
         return binding.root
 
@@ -53,7 +53,6 @@ class DatailsFragment : Fragment() {
 
     private fun loadDetail(id: Int){
         viewModel.pokemonLiveData.observe(viewLifecycleOwner, Observer { pokemonList ->
-            Log.e("PokemonChegaNoFragDet", pokemonList[1].favorite.toString() + pokemonList[1].name)
             pokemon = pokemonList.get(id-1)
             binding.btnFavorite.setImageButtonFavorite(pokemon.favorite)
             setDetailPokemonImage(pokemon)

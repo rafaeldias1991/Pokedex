@@ -1,4 +1,4 @@
-package br.com.rafaeldias.apipokedex.ui.Utils
+package br.com.rafaeldias.apipokedex.ui.utils
 
 import androidx.cardview.widget.CardView
 import br.com.rafaeldias.apipokedex.utils.PokemonColor

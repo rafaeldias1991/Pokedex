@@ -2,9 +2,8 @@ package br.com.rafaeldias.apipokedex
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.rafaeldias.apipokedex.data.remote.PokemonResultApi.Home
 import br.com.rafaeldias.apipokedex.databinding.ActivityMainBinding
-import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
+import br.com.rafaeldias.apipokedex.ui.viewmodel.SharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -17,6 +16,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
-    private val HomeViewModel by viewModel<HomeViewModel>()
+    private val HomeViewModel by viewModel<SharedViewModel>()
 
 }

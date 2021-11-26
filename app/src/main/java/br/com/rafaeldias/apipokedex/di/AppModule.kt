@@ -8,8 +8,7 @@ import br.com.rafaeldias.apipokedex.data.remote.PokedexApi
 import br.com.rafaeldias.apipokedex.data.remote.ServiceClient
 import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import br.com.rafaeldias.apipokedex.ui.adapter.PokemonAdapter
-import br.com.rafaeldias.apipokedex.ui.home.HomeViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import br.com.rafaeldias.apipokedex.ui.viewmodel.SharedViewModel
 import org.koin.dsl.module
 
 private val pokedexModule = module {
@@ -18,7 +17,8 @@ private val pokedexModule = module {
 }
 
 private val viewModelModule = module {
-    viewModel { HomeViewModel( pokedexRepository = get(),applySearchFilterName = get())}
+    single { SharedViewModel( pokedexRepository = get(),applySearchFilterName = get()) }
+
 
 }
 

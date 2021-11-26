@@ -1,4 +1,4 @@
-package br.com.rafaeldias.apipokedex.ui.home
+package br.com.rafaeldias.apipokedex.ui.viewmodel
 
 
 import android.util.Log
@@ -7,17 +7,14 @@ import br.com.rafaeldias.apipokedex.data.repository.PokedexRepository
 import br.com.rafaeldias.apipokedex.ui.PokemonUI
 import br.com.rafaeldias.apipokedex.ui.adapter.ApplySearchFilterName
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(
+class SharedViewModel(
     private val pokedexRepository: PokedexRepository,
     applySearchFilterName: ApplySearchFilterName
 
 ) : ViewModel() {
-
 
     private val _pokemonLiveData = MutableLiveData<List<PokemonUI>>()
     val pokemonLiveData: LiveData<List<PokemonUI>>
@@ -26,7 +23,6 @@ class HomeViewModel(
     init {
         loadPokemon()
     }
-
 
     fun loadPokemon() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,10 +43,13 @@ class HomeViewModel(
     }
 
     fun updatePokemonFavorite(id: Int, favorite: Boolean) {
+
         viewModelScope.launch(Dispatchers.Default) {
             pokedexRepository.updateFavoritePokemon(id, favorite)
-            _pokemonLiveData.value?.get(id-1)?.favorite = favorite
+            _pokemonLiveData.value?.get(id - 1)?.favorite = favorite
+
         }
+
     }
 
     private val _searchQuery = MutableLiveData<CharSequence>("")
